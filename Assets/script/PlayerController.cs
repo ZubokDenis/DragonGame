@@ -9,10 +9,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     public float jumpForce = 5f;
     private Animator anim;
+    public AudioClip JumpSound;
+    public AudioSource audioSource;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Platforms"))
         {
             this.transform.parent = collision.transform;
+            isGrounded = true;
 
         }
 
@@ -40,6 +44,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Platforms"))
         {
             this.transform.parent = null;
+            isGrounded = false;
         }
 
         if (collision.gameObject.CompareTag("Ground"))
@@ -68,7 +73,9 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
+            
         {
+            audioSource.PlayOneShot(JumpSound);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             anim.SetBool("jump", true);
         }

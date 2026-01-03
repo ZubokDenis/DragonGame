@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-    public float speed;
+    public float speed = 4f;
     Rigidbody2D rb;
     public int direction = 1;
     public float damage;
@@ -35,7 +35,9 @@ public class bullet : MonoBehaviour
             Destroy(gameObject);
 
         }
+        
     }
+    
 
 
 }
